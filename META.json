@@ -29,7 +29,7 @@
     "release_status": "stable",
 
     "X_comment": "REQUIRED. License(s) distribution is released under. http://pgxn.org/spec/#license",
-    "license": "MIT",
+    "license": "mit",
 
     "X_comment": "REQUIRED. Specifies extensions contained in this distribution. Each key is the name of an extension. http://pgxn.org/spec/#provides",
     "provides": {
