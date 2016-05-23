@@ -1,0 +1,24 @@
+\set ECHO none
+1..21
+ok 1 - syntax error check value of row_count
+ok 2 - syntax error check sqlstate
+ok 3 - syntax error check message
+ok 4 - syntax error check hint
+ok 5 - syntax error check detail
+ok 6 - syntax error check context
+ok 7 - syntax error check schema_name
+ok 8 - syntax error check table_name
+ok 9 - syntax error check column_name
+ok 10 - syntax error check constraint_name
+ok 11 - syntax error check type_name
+ok 12 - INSERT check value of row_count
+ok 13 - INSERT error is null
+ok 14 - SELECT check value of row_count
+ok 15 - SELECT error is null
+ok 16 - SELECT check value of row_count
+ok 17 - SELECT error is null
+ok 18 - UPDATE 10 rows check value of row_count
+ok 19 - UPDATE 10 rows error is null
+ok 20 - UPDATE no rows check value of row_count
+ok 21 - UPDATE no rows error is null
+# TRANSACTION INTENTIONALLY LEFT OPEN!
