@@ -1,0 +1,58 @@
+\set ECHO none
+1..55
+ok 1 - Verify there are no named cursors
+ok 2 - syntax error result is NULL
+ok 3 - syntax error check sqlstate
+ok 4 - syntax error check message
+ok 5 - syntax error check hint
+ok 6 - syntax error check detail
+ok 7 - syntax error check context
+ok 8 - syntax error check schema_name
+ok 9 - syntax error check table_name
+ok 10 - syntax error check column_name
+ok 11 - syntax error check constraint_name
+ok 12 - syntax error check type_name
+ok 13 - non existent table result is NULL
+ok 14 - non existent table check sqlstate
+ok 15 - non existent table check message
+ok 16 - non existent table check hint
+ok 17 - non existent table check detail
+ok 18 - non existent table check context
+ok 19 - non existent table check schema_name
+ok 20 - non existent table check table_name
+ok 21 - non existent table check column_name
+ok 22 - non existent table check constraint_name
+ok 23 - non existent table check type_name
+ok 24 - ORDER BY i check results
+ok 25 - ORDER BY i error is null
+ok 26 - ORDER BY s check results
+ok 27 - ORDER BY s error is null
+ok 28 - cursor named syntax error result is NOT NULL
+ok 29 - cursor named syntax error check sqlstate
+ok 30 - cursor named syntax error check message
+ok 31 - cursor named syntax error check hint
+ok 32 - cursor named syntax error check detail
+ok 33 - cursor named syntax error check context
+ok 34 - cursor named syntax error check schema_name
+ok 35 - cursor named syntax error check table_name
+ok 36 - cursor named syntax error check column_name
+ok 37 - cursor named syntax error check constraint_name
+ok 38 - cursor named syntax error check type_name
+ok 39 - cursor named non existent table result is NOT NULL
+ok 40 - cursor named non existent table check sqlstate
+ok 41 - cursor named non existent table check message
+ok 42 - cursor named non existent table check hint
+ok 43 - cursor named non existent table check detail
+ok 44 - cursor named non existent table check context
+ok 45 - cursor named non existent table check schema_name
+ok 46 - cursor named non existent table check table_name
+ok 47 - cursor named non existent table check column_name
+ok 48 - cursor named non existent table check constraint_name
+ok 49 - cursor named non existent table check type_name
+ok 50 - Verify there are no named cursors
+ok 51 - Good named cursor returns NULL error result
+ok 52 - Good named cursor returns NULL error result
+ok 53 - Verify named cursors exist
+ok 54 - named cursor ORDER BY i check results
+ok 55 - named cursor ORDER BY s check results
+# TRANSACTION INTENTIONALLY LEFT OPEN!

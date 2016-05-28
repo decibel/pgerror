@@ -1,24 +1,42 @@
 \set ECHO none
-1..21
-ok 1 - syntax error check value of row_count
-ok 2 - syntax error check sqlstate
-ok 3 - syntax error check message
-ok 4 - syntax error check hint
-ok 5 - syntax error check detail
-ok 6 - syntax error check context
-ok 7 - syntax error check schema_name
-ok 8 - syntax error check table_name
-ok 9 - syntax error check column_name
-ok 10 - syntax error check constraint_name
-ok 11 - syntax error check type_name
-ok 12 - INSERT check value of row_count
-ok 13 - INSERT error is null
-ok 14 - SELECT check value of row_count
-ok 15 - SELECT error is null
-ok 16 - SELECT check value of row_count
-ok 17 - SELECT error is null
-ok 18 - UPDATE 10 rows check value of row_count
-ok 19 - UPDATE 10 rows error is null
-ok 20 - UPDATE no rows check value of row_count
-ok 21 - UPDATE no rows error is null
+1..39
+ok 1 - try_into('SELECT 1', 0::int)
+ok 2 - try_into() with strict = true
+ok 3 - Verify error_data() defaults
+ok 4 - Verify error_data()
+ok 5 - Verify error_data()
+ok 6 - Check invalid sql state
+ok 7 - Check simple raise()
+ok 8 - syntax error check value of row_count
+ok 9 - syntax error check sqlstate
+ok 10 - syntax error check message
+ok 11 - syntax error check hint
+ok 12 - syntax error check detail
+ok 13 - syntax error check context
+ok 14 - syntax error check schema_name
+ok 15 - syntax error check table_name
+ok 16 - syntax error check column_name
+ok 17 - syntax error check constraint_name
+ok 18 - syntax error check type_name
+ok 19 - CHECK constraint error check value of row_count
+ok 20 - CHECK constraint error check sqlstate
+ok 21 - CHECK constraint error check message
+ok 22 - CHECK constraint error check hint
+ok 23 - CHECK constraint error check detail
+ok 24 - CHECK constraint error check context
+ok 25 - CHECK constraint error check schema_name
+ok 26 - CHECK constraint error check table_name
+ok 27 - CHECK constraint error check column_name
+ok 28 - CHECK constraint error check constraint_name
+ok 29 - CHECK constraint error check type_name
+ok 30 - INSERT check value of row_count
+ok 31 - INSERT error is null
+ok 32 - SELECT check value of row_count
+ok 33 - SELECT error is null
+ok 34 - SELECT check value of row_count
+ok 35 - SELECT error is null
+ok 36 - UPDATE 10 rows check value of row_count
+ok 37 - UPDATE 10 rows error is null
+ok 38 - UPDATE no rows check value of row_count
+ok 39 - UPDATE no rows error is null
 # TRANSACTION INTENTIONALLY LEFT OPEN!
