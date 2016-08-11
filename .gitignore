@@ -1,3 +1,6 @@
+# GENERATED FILES
+sql/pgerror.sql
+
 # Editor files
 .*.swp
 
