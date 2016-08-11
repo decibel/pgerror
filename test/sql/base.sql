@@ -199,16 +199,16 @@ SELECT is(
       , NULL
       , description || ' check value of row_count'
     )
-    || E'\n' || is((error).sqlstate, bad.sqlstate, description || ' check sqlstate')
-    || E'\n' || is((error).message, bad.message, description || ' check message')
-    || E'\n' || is((error).hint, bad.hint, description || ' check hint')
-    || E'\n' || is((error).detail, bad.detail, description || ' check detail')
-    || E'\n' || is('"' || (error).context || '"', '"' || bad.context || '"', description || ' check context')
-    || E'\n' || is((error).schema_name, bad.schema_name, description || ' check schema_name')
-    || E'\n' || is((error).table_name, bad.table_name, description || ' check table_name')
-    || E'\n' || is((error).column_name, bad.column_name, description || ' check column_name')
-    || E'\n' || is((error).constraint_name, bad.constraint_name, description || ' check constraint_name')
-    || E'\n' || is((error).type_name, bad.type_name, description || ' check type_name')
+    || E'\n' || "is"((error).sqlstate, bad.sqlstate, description || ' check sqlstate')
+    || E'\n' || "is"((error).message, bad.message, description || ' check message')
+    || E'\n' || "is"((error).hint, bad.hint, description || ' check hint')
+    || E'\n' || "is"((error).detail, bad.detail, description || ' check detail')
+    || E'\n' || "is"('"' || (error).context || '"', '"' || bad.context || '"', description || ' check context')
+    || E'\n' || "is"((error).schema_name, bad.schema_name, description || ' check schema_name')
+    || E'\n' || "is"((error).table_name, bad.table_name, description || ' check table_name')
+    || E'\n' || "is"((error).column_name, bad.column_name, description || ' check column_name')
+    || E'\n' || "is"((error).constraint_name, bad.constraint_name, description || ' check constraint_name')
+    || E'\n' || "is"((error).type_name, bad.type_name, description || ' check type_name')
   FROM bad, try(code)
 ;
 
@@ -221,7 +221,7 @@ SELECT  is(
       , _row_count
       , description || ' check value of row_count'
     )
-    || E'\n' || is(
+    || E'\n' || "is"(
       error
       , NULL
       , description || ' error is null'
