@@ -41,7 +41,7 @@ INSERT INTO bad VALUES
     , 'syntax error at or near "bogus"'
     , ''
     , ''
-    , 'PL/pgSQL function try_cursor(text,text) line 6 at OPEN'
+    , 'PL/pgSQL function error_schema.try_cursor(text,text) line 6 at OPEN'
     , ''
     , ''
     , ''
@@ -54,7 +54,7 @@ INSERT INTO bad VALUES
     , 'relation "pg_temp.non_existent_table" does not exist'
     , ''
     , ''
-    , 'PL/pgSQL function try_cursor(text,text) line 6 at OPEN'
+    , 'PL/pgSQL function error_schema.try_cursor(text,text) line 6 at OPEN'
     , ''
     , ''
     , ''
@@ -81,7 +81,6 @@ SELECT is_empty(
   , 'Verify there are no named cursors'
 );
 
-
 -- TODO: test other return values
 SELECT ok(
       result IS NULL
@@ -97,7 +96,7 @@ SELECT ok(
     || E'\n' || "is"((error).column_name, bad.column_name, description || ' check column_name')
     || E'\n' || "is"((error).constraint_name, bad.constraint_name, description || ' check constraint_name')
     || E'\n' || "is"((error).type_name, bad.type_name, description || ' check type_name')
-  FROM bad, try_cursor(code)
+  FROM bad, error_schema.try_cursor(code) t
 ;
 
 /*
@@ -113,7 +112,7 @@ SELECT results_eq(
       , NULL
       , description || ' error is null'
     )
-  FROM good, try_cursor(code)
+  FROM good, error_schema.try_cursor(code)
   ORDER BY seq
 ;
 
@@ -134,7 +133,7 @@ SELECT ok(
     || E'\n' || "is"((error).column_name, bad.column_name, 'cursor named ' || description || ' check column_name')
     || E'\n' || "is"((error).constraint_name, bad.constraint_name, 'cursor named ' || description || ' check constraint_name')
     || E'\n' || "is"((error).type_name, bad.type_name, 'cursor named ' || description || ' check type_name')
-  FROM bad, try_cursor(code, description)
+  FROM bad, error_schema.try_cursor(code, description)
 ;
 
 SELECT is_empty(
@@ -146,7 +145,7 @@ SELECT is_empty(
  * Named good
  */
 SELECT is(
-        (try_cursor(code, description)).error
+        (error_schema.try_cursor(code, description)).error
         , NULL
         , 'Good named cursor returns NULL error result'
       )

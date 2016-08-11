@@ -21,7 +21,7 @@ CREATE FUNCTION error_data(
   , column_name       text = ''
   , constraint_name   text = ''
   , type_name         text = ''
-) RETURNS error_data LANGUAGE sql IMMUTABLE AS $$
+) RETURNS error_data LANGUAGE sql IMMUTABLE SET search_path FROM current AS $$
 SELECT row(
   sqlstate
   , message
@@ -50,18 +50,6 @@ CREATE OR REPLACE FUNCTION raise(
   , type_name         text = NULL
 ) RETURNS void LANGUAGE plpgsql AS $body$
 DECLARE
-  -- Default to the same thing plpgsql RAISE without a SQLSTATE does
-  c_sqlstate CONSTANT text := coalesce(nullif(sqlstate,''), 'P0001');
-/*
-  c_message CONSTANT text := coalesce(message, '<NULL>');
-  c_hint CONSTANT text := coalesce(hint, '<NULL>');
-  c_detail CONSTANT text := coalesce(detail, '<NULL>');
-  c_schema_name CONSTANT text := coalesce(schema_name, '<NULL>');
-  c_table_name CONSTANT text := coalesce(table_name, '<NULL>');
-  c_column_name CONSTANT text := coalesce(column_name, '<NULL>');
-  c_constraint CONSTANT text := coalesce(constraint, '<NULL>');
-  c_datatype CONSTANT text := coalesce(datatype, '<NULL>');
-*/
   sql text;
   conds text[];
 BEGIN

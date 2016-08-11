@@ -45,7 +45,7 @@ INSERT INTO bad VALUES
     , 'syntax error at or near "bogus"'
     , ''
     , ''
-    , 'PL/pgSQL function try(text) line 3' || pg_temp.exec_out()
+    , 'PL/pgSQL function error_schema.try(text) line 3' || pg_temp.exec_out()
     , ''
     , ''
     , ''
@@ -57,7 +57,7 @@ INSERT INTO bad VALUES
     , 'new row for relation "test_bad" violates check constraint "test_bad_must_be_true_check"'
     , ''
     , 'Failing row contains (f).'
-    , E'SQL statement "INSERT INTO test_bad VALUES(false)"\nPL/pgSQL function try(text) line 3' || pg_temp.exec_out()
+    , E'SQL statement "INSERT INTO test_bad VALUES(false)"\nPL/pgSQL function error_schema.try(text) line 3' || pg_temp.exec_out()
     , (SELECT nspname FROM pg_namespace WHERE oid = pg_my_temp_schema())
     , 'test_bad'
     , ''
@@ -76,22 +76,22 @@ SELECT plan(
 );
 
 SELECT is(
-  (try_into('SELECT 1', 0::int)).result
+  (error_schema.try_into('SELECT 1', 0::int)).result
   , 1
-  , $$try_into('SELECT 1', 0::int)$$
+  , $$error_schema.try_into('SELECT 1', 0::int)$$
 );
 SELECT is(
-  (try_into('VALUES(1),(2)', NULL::int, strict := true)).error
-  , error_data(
+  (error_schema.try_into('VALUES(1),(2)', NULL::int, strict := true)).error
+  , error_schema.error_data(
     'P0003'
     , 'query returned more than one row'
-    , context := 'PL/pgSQL function try_into(text,anyelement,boolean) line 4' || pg_temp.exec_out()
+    , context := 'PL/pgSQL function error_schema.try_into(text,anyelement,boolean) line 4' || pg_temp.exec_out()
   )
-  , 'try_into() with strict = true'
+  , 'error_schema.try_into() with strict = true'
 );
 
 SELECT is(
-  error_data()
+  error_schema.error_data()
   , row(
     ''
     , ''
@@ -103,12 +103,12 @@ SELECT is(
     , ''
     , ''
     , ''
-  )::error_data
-  , 'Verify error_data() defaults'
+  )::error_schema.error_data
+  , 'Verify error_schema.error_data() defaults'
 );
 
 SELECT is(
-  error_data(
+  error_schema.error_data(
     sqlstate := 'sqlstate_1'
     , message := 'message_1'
     , hint := 'hint_1'
@@ -131,11 +131,11 @@ SELECT is(
     , 'column_name_1'
     , 'constraint_name_1'
     , 'type_name_1'
-  )::error_data
-  , 'Verify error_data()'
+  )::error_schema.error_data
+  , 'Verify error_schema.error_data()'
 );
 SELECT is(
-  error_data(
+  error_schema.error_data(
     sqlstate := 'sqlstate_2'
     , message := 'message_2'
     , hint := 'hint_2'
@@ -158,12 +158,12 @@ SELECT is(
     , 'column_name_2'
     , 'constraint_name_2'
     , 'type_name_2'
-  )::error_data
-  , 'Verify error_data()'
+  )::error_schema.error_data
+  , 'Verify error_schema.error_data()'
 );
 
 SELECT throws_ok(
-  $$SELECT raise(
+  $$SELECT error_schema.raise(
     'message_1', 'EXCEPTION'
     , sqlstate := 'sqlstate_1'
     , hint := 'hint_1'
@@ -181,7 +181,7 @@ SELECT throws_ok(
 );
 
 SELECT throws_ok(
-  $$SELECT raise(
+  $$SELECT error_schema.raise(
     'message_1', 'EXCEPTION'
     , hint := 'hint_1'
     , detail := 'detail_1'
@@ -194,7 +194,7 @@ SELECT throws_ok(
   $$
   , 'P0001'
   , $$message_1$$
-  , 'Check simple raise()'
+  , 'Check simple error_schema.raise()'
 );
 
 -- TODO: full suite of raise() tests
@@ -214,7 +214,7 @@ SELECT is(
     || E'\n' || "is"((error).column_name, bad.column_name, description || ' check column_name')
     || E'\n' || "is"((error).constraint_name, bad.constraint_name, description || ' check constraint_name')
     || E'\n' || "is"((error).type_name, bad.type_name, description || ' check type_name')
-  FROM bad, try(code)
+  FROM bad, error_schema.try(code)
 ;
 
 CREATE TEMP TABLE test(
@@ -231,7 +231,7 @@ SELECT  is(
       , NULL
       , description || ' error is null'
     )
-  FROM good, try(code)
+  FROM good, error_schema.try(code)
   ORDER BY seq
 ;
 

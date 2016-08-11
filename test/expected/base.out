@@ -1,12 +1,12 @@
 \set ECHO none
 1..39
-ok 1 - try_into('SELECT 1', 0::int)
-ok 2 - try_into() with strict = true
-ok 3 - Verify error_data() defaults
-ok 4 - Verify error_data()
-ok 5 - Verify error_data()
+ok 1 - error_schema.try_into('SELECT 1', 0::int)
+ok 2 - error_schema.try_into() with strict = true
+ok 3 - Verify error_schema.error_data() defaults
+ok 4 - Verify error_schema.error_data()
+ok 5 - Verify error_schema.error_data()
 ok 6 - Check invalid sql state
-ok 7 - Check simple raise()
+ok 7 - Check simple error_schema.raise()
 ok 8 - syntax error check value of row_count
 ok 9 - syntax error check sqlstate
 ok 10 - syntax error check message
