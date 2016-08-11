@@ -2,6 +2,11 @@
 
 \i test/pgxntool/setup.sql
 
+CREATE FUNCTION pg_temp.exec_out(
+) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+SELECT ' at EXECUTE' || CASE WHEN current_setting('server_version_num')::int < 90500 THEN ' statement' ELSE '' END
+$$;
+
 CREATE TEMP TABLE good(
   seq serial
   , code text
@@ -40,7 +45,7 @@ INSERT INTO bad VALUES
     , 'syntax error at or near "bogus"'
     , ''
     , ''
-    , 'PL/pgSQL function try(text) line 3 at EXECUTE statement'
+    , 'PL/pgSQL function try(text) line 3' || pg_temp.exec_out()
     , ''
     , ''
     , ''
@@ -52,7 +57,7 @@ INSERT INTO bad VALUES
     , 'new row for relation "test_bad" violates check constraint "test_bad_must_be_true_check"'
     , ''
     , 'Failing row contains (f).'
-    , E'SQL statement "INSERT INTO test_bad VALUES(false)"\nPL/pgSQL function try(text) line 3 at EXECUTE statement'
+    , E'SQL statement "INSERT INTO test_bad VALUES(false)"\nPL/pgSQL function try(text) line 3' || pg_temp.exec_out()
     , (SELECT nspname FROM pg_namespace WHERE oid = pg_my_temp_schema())
     , 'test_bad'
     , ''
@@ -80,7 +85,7 @@ SELECT is(
   , error_data(
     'P0003'
     , 'query returned more than one row'
-    , context := 'PL/pgSQL function try_into(text,anyelement,boolean) line 4 at EXECUTE statement'
+    , context := 'PL/pgSQL function try_into(text,anyelement,boolean) line 4' || pg_temp.exec_out()
   )
   , 'try_into() with strict = true'
 );
