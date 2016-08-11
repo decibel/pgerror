@@ -97,7 +97,7 @@ END$raise_function$;$$;
     PERFORM pg_temp.raise_error_internal();
   EXCEPTION WHEN OTHERS
       OR QUERY_CANCELED
-      -- 9.5+ only OR ASSERT_FAILURE
+      -- GE95: OR ASSERT_FAILURE
       THEN
     RAISE;
   END;
