@@ -21,7 +21,7 @@ CREATE FUNCTION error_data(
   , column_name       text = ''
   , constraint_name   text = ''
   , type_name         text = ''
-) RETURNS error_data LANGUAGE sql IMMUTABLE SET search_path FROM current AS $$
+) RETURNS error_data LANGUAGE sql IMMUTABLE SET search_path FROM CURRENT AS $$
 SELECT row(
   sqlstate
   , message
@@ -106,7 +106,7 @@ $body$;
 CREATE OR REPLACE FUNCTION raise(
   error               error_data
   , level             text = 'EXCEPTION'
-) RETURNS void LANGUAGE sql AS $$
+) RETURNS void LANGUAGE sql SET search_path FROM CURRENT AS $$
 SELECT raise(
   error.message
   , level

@@ -72,7 +72,7 @@ SELECT plan(
   + 4 -- error_data()
   + 1 -- simple raise
   + 2 * (SELECT count(*)::int FROM good)
-  + 11 * (SELECT count(*)::int FROM bad)
+  + (11+1) * (SELECT count(*)::int FROM bad)
 );
 
 SELECT is(
@@ -199,22 +199,34 @@ SELECT throws_ok(
 
 -- TODO: full suite of raise() tests
 
+CREATE TEMP TABLE bad_results AS
+  SELECT b.*, t.error, t.row_count
+    FROM bad b, error_schema.try(code) t
+;
 SELECT is(
       row_count
       , NULL
       , description || ' check value of row_count'
     )
-    || E'\n' || "is"((error).sqlstate, bad.sqlstate, description || ' check sqlstate')
-    || E'\n' || "is"((error).message, bad.message, description || ' check message')
-    || E'\n' || "is"((error).hint, bad.hint, description || ' check hint')
-    || E'\n' || "is"((error).detail, bad.detail, description || ' check detail')
-    || E'\n' || "is"('"' || (error).context || '"', '"' || bad.context || '"', description || ' check context')
-    || E'\n' || "is"((error).schema_name, bad.schema_name, description || ' check schema_name')
-    || E'\n' || "is"((error).table_name, bad.table_name, description || ' check table_name')
-    || E'\n' || "is"((error).column_name, bad.column_name, description || ' check column_name')
-    || E'\n' || "is"((error).constraint_name, bad.constraint_name, description || ' check constraint_name')
-    || E'\n' || "is"((error).type_name, bad.type_name, description || ' check type_name')
-  FROM bad, error_schema.try(code)
+    || E'\n' || "is"((error).sqlstate, b.sqlstate, description || ' check sqlstate')
+    || E'\n' || "is"((error).message, b.message, description || ' check message')
+    || E'\n' || "is"((error).hint, b.hint, description || ' check hint')
+    || E'\n' || "is"((error).detail, b.detail, description || ' check detail')
+    || E'\n' || "is"('"' || (error).context || '"', '"' || b.context || '"', description || ' check context')
+    || E'\n' || "is"((error).schema_name, b.schema_name, description || ' check schema_name')
+    || E'\n' || "is"((error).table_name, b.table_name, description || ' check table_name')
+    || E'\n' || "is"((error).column_name, b.column_name, description || ' check column_name')
+    || E'\n' || "is"((error).constraint_name, b.constraint_name, description || ' check constraint_name')
+    || E'\n' || "is"((error).type_name, b.type_name, description || ' check type_name')
+  FROM bad_results b
+;
+
+SELECT throws_ok(
+      format($$SELECT error_schema.raise(%L::error_schema.error_data)$$, error)
+      , sqlstate
+      , message
+    )
+  FROM bad_results
 ;
 
 CREATE TEMP TABLE test(
@@ -235,6 +247,13 @@ SELECT  is(
   ORDER BY seq
 ;
 
+\set VERBOSITY default
+\echo
+\echo Should output two warnings
+\echo
+SELECT error_schema.raise(error, 'warning') FROM bad_results;
+
 \i test/pgxntool/finish.sql
+
 
 -- vi: expandtab ts=2 sw=2

@@ -1,5 +1,5 @@
 \set ECHO none
-1..39
+1..41
 ok 1 - error_schema.try_into('SELECT 1', 0::int)
 ok 2 - error_schema.try_into() with strict = true
 ok 3 - Verify error_schema.error_data() defaults
@@ -29,14 +29,30 @@ ok 26 - CHECK constraint error check table_name
 ok 27 - CHECK constraint error check column_name
 ok 28 - CHECK constraint error check constraint_name
 ok 29 - CHECK constraint error check type_name
-ok 30 - INSERT check value of row_count
-ok 31 - INSERT error is null
-ok 32 - SELECT check value of row_count
-ok 33 - SELECT error is null
+ok 30 - threw 42601: syntax error at or near "bogus"
+ok 31 - threw 23514: new row for relation "test_bad" violates check constraint "test_bad_must_be_true_check"
+ok 32 - INSERT check value of row_count
+ok 33 - INSERT error is null
 ok 34 - SELECT check value of row_count
 ok 35 - SELECT error is null
-ok 36 - UPDATE 10 rows check value of row_count
-ok 37 - UPDATE 10 rows error is null
-ok 38 - UPDATE no rows check value of row_count
-ok 39 - UPDATE no rows error is null
+ok 36 - SELECT check value of row_count
+ok 37 - SELECT error is null
+ok 38 - UPDATE 10 rows check value of row_count
+ok 39 - UPDATE 10 rows error is null
+ok 40 - UPDATE no rows check value of row_count
+ok 41 - UPDATE no rows error is null
+
+Should output two warnings
+
+WARNING:  syntax error at or near "bogus"
+CONTEXT:  SQL statement "SELECT pg_temp.raise_error_internal()"
+PL/pgSQL function error_schema.raise(text,text,text,text,text,text,text,text,text,text) line 47 at PERFORM
+SQL function "raise" statement 1
+WARNING:  new row for relation "test_bad" violates check constraint "test_bad_must_be_true_check"
+DETAIL:  Failing row contains (f).
+CONTEXT:  SQL statement "SELECT pg_temp.raise_error_internal()"
+PL/pgSQL function error_schema.raise(text,text,text,text,text,text,text,text,text,text) line 47 at PERFORM
+SQL function "raise" statement 1
+
+
 # TRANSACTION INTENTIONALLY LEFT OPEN!
