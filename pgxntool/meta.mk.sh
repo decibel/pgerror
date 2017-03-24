@@ -85,6 +85,7 @@ for ext in $provides; do
   version=$(getkey provides.${ext}.version)
   [ -n "$version" ] || die 2 "provides/${ext} does not specify a version number"
   echo "EXTENSIONS += $ext"
+  echo "EXTENSION_SQL_FILES += sql/${ext}.sql"
   echo "EXTENSION_${ext}_VERSION := ${version}"
   echo "EXTENSION_${ext}_VERSION_FILE	= sql/${ext}--\$(EXTENSION_${ext}_VERSION).sql"
   echo "EXTENSION_VERSION_FILES		+= \$(EXTENSION_${ext}_VERSION_FILE)"
