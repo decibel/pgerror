@@ -1,0 +1,52 @@
+\set ECHO none
+1..41
+ok 1 - error_schema.try_into('SELECT 1', 0::int)
+ok 2 - error_schema.try_into() with strict = true
+ok 3 - Verify error_schema.error_data() defaults
+ok 4 - Verify error_schema.error_data()
+ok 5 - Verify error_schema.error_data()
+ok 6 - Check invalid sql state
+ok 7 - Check simple error_schema.raise()
+ok 8 - syntax error check value of row_count
+ok 9 - syntax error check sqlstate
+ok 10 - syntax error check message
+ok 11 - syntax error check hint
+ok 12 - syntax error check detail
+ok 13 - syntax error check context
+ok 14 - syntax error check schema_name
+ok 15 - syntax error check table_name
+ok 16 - syntax error check column_name
+ok 17 - syntax error check constraint_name
+ok 18 - syntax error check type_name
+ok 19 - CHECK constraint error check value of row_count
+ok 20 - CHECK constraint error check sqlstate
+ok 21 - CHECK constraint error check message
+ok 22 - CHECK constraint error check hint
+ok 23 - CHECK constraint error check detail
+ok 24 - CHECK constraint error check context
+ok 25 - CHECK constraint error check schema_name
+ok 26 - CHECK constraint error check table_name
+ok 27 - CHECK constraint error check column_name
+ok 28 - CHECK constraint error check constraint_name
+ok 29 - CHECK constraint error check type_name
+ok 30 - threw 42601: syntax error at or near "bogus"
+ok 31 - threw 23514: new row for relation "test_bad" violates check constraint "test_bad_must_be_true_check"
+ok 32 - INSERT check value of row_count
+ok 33 - INSERT error is null
+ok 34 - SELECT check value of row_count
+ok 35 - SELECT error is null
+ok 36 - SELECT check value of row_count
+ok 37 - SELECT error is null
+ok 38 - UPDATE 10 rows check value of row_count
+ok 39 - UPDATE 10 rows error is null
+ok 40 - UPDATE no rows check value of row_count
+ok 41 - UPDATE no rows error is null
+
+Should output two warnings
+
+WARNING:  syntax error at or near "bogus"
+WARNING:  new row for relation "test_bad" violates check constraint "test_bad_must_be_true_check"
+DETAIL:  Failing row contains (f).
+
+
+# TRANSACTION INTENTIONALLY LEFT OPEN!

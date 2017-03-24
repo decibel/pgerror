@@ -1,0 +1,22 @@
+\set ECHO none
+           Composite type "public.error_data"
+     Column      | Type | Collation | Nullable | Default 
+-----------------+------+-----------+----------+---------
+ sqlstate        | text |           |          | 
+ message         | text |           |          | 
+ hint            | text |           |          | 
+ detail          | text |           |          | 
+ context         | text |           |          | 
+ schema_name     | text |           |          | 
+ table_name      | text |           |          | 
+ column_name     | text |           |          | 
+ constraint_name | text |           |          | 
+ type_name       | text |           |          | 
+
+                                         List of functions
+ Schema | Name | Result data type |                  Argument data types                   |  Type  
+--------+------+------------------+--------------------------------------------------------+--------
+ public | try  | record           | code text, OUT row_count integer, OUT error error_data | normal
+(1 row)
+
+# TRANSACTION INTENTIONALLY LEFT OPEN!
