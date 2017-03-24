@@ -5,7 +5,7 @@ VERSION 	 = $(shell $(PG_CONFIG) --version | awk '{sub("(alpha|beta|devel).*", "
 
 GE95		 := $(call test, $(MAJORVER), -ge, 95)
 
-.PHONY: sql/pgerror.sql
+extra_clean += sql/pgerror.sql
 sql/pgerror.sql: sql/pgerror.in.sql
 ifeq ($(call test, $(MAJORVER), -ge, 95),yes)
 	@sed -e 's/-- GE95: //' $< > $@
